@@ -1,0 +1,25 @@
+div.InputUser{
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    font-size: 5em;
+    margin: 0 auto;
+    margin-top: 10%;
+}
+
+.InputUser input{
+    margin:2%;
+    font-size: 0.5em;
+}
+
+button.Verifier{
+    margin-left: 39.5%;
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    font-size: 5em;
+}
+
+button.Verifier:hover{
+    color: rgb(255, 222, 7);
+}

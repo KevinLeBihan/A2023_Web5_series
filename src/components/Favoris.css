@@ -1,0 +1,53 @@
+div.false{
+    /* background-color: red;s */
+    width: 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.false button svg{
+    width: 5em;
+    height: 5em;
+    fill: rgb(255, 222, 7);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    right: 160px;
+    bottom:18px
+}
+
+div.false button{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+div.true{
+    /* background-color: red;s */
+    width: 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.true button svg{
+    width: 5em;
+    height: 5em;
+    fill: rgb(255, 0, 0);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    right: 160px;
+    bottom:18px
+}
+
+div.true button{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}

@@ -1,0 +1,74 @@
+div.Detail-Serie{
+    padding: 2%;
+}
+div.Detail-Serie div.image-video{
+    display: flex;
+    gap: 2.2%;
+    margin-bottom:5% ;
+}
+
+div.Detail-Serie img.poster{ 
+    width: 29.4%;
+}
+
+div.Detail-Serie div.section{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2%;
+}
+
+.autre-info{
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+    font-size: 1.2em;
+   
+}
+section.info-serie{
+    width: 85%;
+}
+section.info-serie h1{
+    font-size: 2.5em;
+    margin-bottom: 2%;
+}
+section.info-serie h2{
+    font-size: 1.5em;
+    margin-bottom: 2%;
+}
+section.info-serie h2.year{
+    font-size: 1.5em;
+    margin-bottom: 2%;
+} 
+section.info-serie p.overview{
+    width: 80%;
+    margin-bottom:2%;
+}
+section.info-serie p.votes{
+    display: block;
+    width: 80%;
+    margin-bottom:2%;
+    position: relative;
+    top: 20px;
+    left: 10px;
+}
+section.info-serie div.commentaire{
+   display: flex;
+}
+section.eval p{
+    margin-top: 1%;
+    position: relative;
+    left: 8px;
+}
+
+.exit button {
+    background-color: rgba(43, 43, 42,0);
+    font-size: 1.8em;
+    position: relative;
+    bottom: 50px;
+}
+
+.saison-detail{
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}

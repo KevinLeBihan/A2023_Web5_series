@@ -1,0 +1,71 @@
+
+div.saison p.true{
+    display: block;
+    width: 7%;
+    margin-left: 5%;
+    position: relative;
+    left: 50px;
+}
+
+div.saison button.false svg{
+    width: 5em;
+    height: 5em;
+    fill: rgb(255, 222, 7);
+    cursor: pointer;
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    rotate: 180deg;
+}
+div.saison button.true svg{
+    width: 5em;
+    height: 5em;
+    fill: rgb(255, 222, 7);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    rotate: 0deg;
+}
+
+div.saison button{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+div.bouton-saison{
+    display: flex;
+    margin-left: 5%;
+    align-items: center;
+    gap: 2%;
+    width: 100%;
+}
+
+div.saison{
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    flex-direction: column;
+    gap: 2%;
+    width: 100%;
+}
+div.bouton-saison{
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    flex-direction: row;
+    gap: 2%;
+}
+div.bouton-saison h2{
+    width: 104px;
+    display: flex;
+}
+div.saison p.true{
+    width: 10em;
+    display: block;
+    opacity: 1;
+    margin: 0 0 3% -20% ;
+}
+div.saison p.false{
+    display: none;
+}

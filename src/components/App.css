@@ -12,15 +12,18 @@
     width: 2000px;
     gap: 5%;
     margin: 2% auto;
+    
 }
-.Tendance div.Serie{
+.Tendance div.Serie {
     width: 300px;
+    
 }
 
 .Tendance img.poster{
     width: 100%;
     margin-bottom: 20%;
     transition: 0.5s;
+  
 }
 
 .Tendance img.poster:hover{
@@ -35,9 +38,15 @@
     margin: 0 auto ;
     background-color: rgb(43, 43, 42);
     border-radius: 5%;
-    position: fixed;
+    /* position: fixed; */
     top: 0%;
     left: 30%;
+}
+.detailsSerie img.poster{
+    width:30.4% ;
+}
+.detailsSerie img.poster:hover{
+    width:30.4% ;
 }
 
 div.backdrop_hidden{
@@ -63,7 +72,7 @@ div.backdrop_hidden{
     width: 300px;
 }
 
-.fav img.poster{
+/* .fav img.poster{
     width: 100%;
     margin-bottom: 20%;
     transition: 0.5s;
@@ -72,6 +81,6 @@ div.backdrop_hidden{
 .Tendance img.poster:hover{
     width: 115%;
     transition: .5s;
-}
+} */
 
 

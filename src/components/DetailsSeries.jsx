@@ -19,8 +19,8 @@ const DetailsSeries = ({ title, year, id, imdb, tagline, overview, network, coun
 
 
 
-    const { idSerie } = useParams();
-    const isFav = favorite.some((fav) => fav.id === serieId);
+    // const { idSerie } = useParams();
+    // const isFav = favorite.some((fav) => fav.id === serieId);
     console.log(saison);
     // console.log(favorite.some((fav) => fav.id));
     // console.log(id);
@@ -28,7 +28,9 @@ const DetailsSeries = ({ title, year, id, imdb, tagline, overview, network, coun
     return (
         <div className="Detail-Serie">
             <div className="exit">
-                <button onClick={onClickFn}>X</button>
+                <Link to="">
+                    <button onClick={onClickFn}>X</button>
+                </Link>
             </div>
             <div className="image-video">
                 <img src={poster} alt="poster" className="poster" />
@@ -44,7 +46,7 @@ const DetailsSeries = ({ title, year, id, imdb, tagline, overview, network, coun
                     <div className="commentaire">
                         <MyComponent evaluation={rating} className="star" />
                         <p className="votes">{votes} votes</p>
-                        <Favoris isFav={isFav} onClickFn={onClickFav} />
+                        <Favoris isFav={favorite} onClickFn={onClickFav} />
 
                         {/* <Favoris className="Bouton-fav" isFav={isFav}/> */}
                     </div>

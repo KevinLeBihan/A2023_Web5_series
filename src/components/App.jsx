@@ -36,6 +36,7 @@ const App = () => {
         setDetailVisible(false);
 
     };
+    const allo = "";
 
     const clickFavorite = (serie) => {
         setFavorite((prevFavorite) => {
@@ -47,7 +48,9 @@ const App = () => {
             }
         });
     };
-    
+
+    const mesLiens = ['SeriesTendances', 'Series-fav']
+
     const routes = [
         {
             path: '',
@@ -79,11 +82,13 @@ const App = () => {
                                                 imdb={imdb}
                                                 poster={poster}
                                                 onClickFn={() => onClickHandler(id)}
+                                                lienRendu = {mesLiens[0]}
                                             />
                                         );
                                     })}
                                 </div>
                             </div>
+                            
                         ) : (
                             <Navigate to="/login" replace/>
                         ),
@@ -92,7 +97,6 @@ const App = () => {
                             {
                                 path: '/SeriesTendances/:serieId',
                                 element:
-
                                     (detailVisible && idSerie !== null &&
                                         <div className="detailsSerie" >
                                             <DetailsSeries
@@ -116,6 +120,7 @@ const App = () => {
                                                 onClickFav={() => clickFavorite(details[idSerie])}
                                                 favorite={favorite}
                                                 saison={details[idSerie].seasons}
+                                                lienRendu = {mesLiens[0]}
                                             />
                                         </div>
                                     )
@@ -141,19 +146,56 @@ const App = () => {
                                                 imdb={imdb}
                                                 poster={poster}
                                                 onClickFn={() => onClickHandler(id)}
+                                                lienRendu = {mesLiens[1]}
                                             />
                                         );
                                     })}
                                 </div>
                             </div>
-                        )
+                        ),
+                        children:
+                        [
+                            {
+                                path: '/Series-fav/:serieId',
+                                element:
+
+                                    (detailVisible && idSerie !== null &&
+                                        <div className="detailsSerie" >
+                                            <DetailsSeries
+                                                title={details[idSerie].title}
+                                                year={details[idSerie].year}
+                                                id={details[idSerie].id}
+                                                imdb={details[idSerie].imdb}
+                                                tagline={details[idSerie].tagline}
+                                                overview={details[idSerie].overview}
+                                                network={details[idSerie].network}
+                                                country={details[idSerie].country}
+                                                trailer={details[idSerie].trailer}
+                                                status={details[idSerie].status}
+                                                rating={details[idSerie].rating}
+                                                votes={details[idSerie].votes}
+                                                language={details[idSerie].language}
+                                                genres={details[idSerie].genres}
+                                                aired_episodes={details[idSerie].aired_episodes}
+                                                poster={details[idSerie].poster}
+                                                onClickFn={clickBackdrop}
+                                                onClickFav={() => clickFavorite(details[idSerie])}
+                                                favorite={favorite}
+                                                saison={details[idSerie].seasons}
+                                                lienRendu = {mesLiens[1]}
+                                            />
+                                        </div>
+                                    )
+
+                            }
+                        ]
                 },
                 {
                     path: 'profil',
                     element:
                         (
                             <div className="Profil">
-                                <Profil nom={user} nbFav={favorite.length} photo="https://i.pravatar.cc/300" estConnecte={()=> setEstConnecte()} />
+                                <Profil nom={user} nbFav={favorite.length} photo="https://i.pravatar.cc/300" cEstDeco={()=> setEstConnecte(false)} />
                             </div>
                         )
                 },
@@ -168,168 +210,6 @@ const App = () => {
 
     return <RouterProvider router={createBrowserRouter(routes)} />;
 
-
-
-
-
-
-
-
-
-
-    // const routes = [
-    //     {
-    //         path: '',
-    //         element: <Layout />,
-    //         children: [
-    //             {
-    //                 index: true,
-    //                 // element: <Navigate to="/layout" replace/>
-    //             },
-    //             {
-    //                 path: 'login',
-    //                 element:
-    //                     (
-    //                         <LogIn onLogin={() => setEstConnecte(true)} estConnecte={estConnecte} updateUser={updateUser} />
-    //                     )
-    //             },
-    //             {
-    //                 path: 'SeriesTendances',
-    //                 element: estConnecte ? (
-    //                     <div className="SeriesTendances">
-    //                         <h1 className="titre">Séries Tendances</h1>
-    //                         <div className="Tendance">
-    //                             {list_series.map(({ title, year, id, slug, imdb, poster }) => {
-    //                                 return (
-    //                                     <ListeSeries
-    //                                         key={id}
-    //                                         title={title}
-    //                                         year={year}
-    //                                         id={id}
-    //                                         slug={slug}
-    //                                         imdb={imdb}
-    //                                         poster={poster}
-    //                                         onClickFn={() => onClickHandler(id)}
-    //                                     />
-    //                                 );
-    //                             })}
-    //                         </div>
-    //                     </div>
-    //                 ) : (
-    //                     <Navigate to="/login" />
-    //                 ),
-    //                 children: [
-    //                     {
-    //                         path: ':idSerie',
-    //                         element: (
-    //                             detailVisible && idSerie !== null && (
-    //                                 <div className="detailsSerie" >
-    //                                     <DetailsSeries
-    //                                         title={details[idSerie].title}
-    //                                         year={details[idSerie].year}
-    //                                         id={details[idSerie].id}
-    //                                         imdb={details[idSerie].imdb}
-    //                                         tagline={details[idSerie].tagline}
-    //                                         overview={details[idSerie].overview}
-    //                                         network={details[idSerie].network}
-    //                                         country={details[idSerie].country}
-    //                                         trailer={details[idSerie].trailer}
-    //                                         status={details[idSerie].status}
-    //                                         rating={details[idSerie].rating}
-    //                                         votes={details[idSerie].votes}
-    //                                         language={details[idSerie].language}
-    //                                         genres={details[idSerie].genres}
-    //                                         aired_episodes={details[idSerie].aired_episodes}
-    //                                         poster={details[idSerie].poster}
-    //                                         onClickFn={clickBackdrop}
-    //                                         onClickFav={() => clickFavorite(details[idSerie])}
-    //                                         favorite={favorite}
-    //                                         saison={details[idSerie].seasons}
-    //                                     />
-    //                                 </div>
-    //                             )
-    //                         )
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 path: 'Series-fav',
-    //                 element: estConnecte ? (
-    //                     <div className="Series-fav">
-    //                         <h1 className="titre">Séries favoris</h1>
-    //                         <div className="fav">
-    //                             {favorite.map(({ title, year, id, slug, imdb, poster }) => {
-    //                                 return (
-    //                                     <ListeSeries
-    //                                         key={id}
-    //                                         title={title}
-    //                                         year={year}
-    //                                         id={id}
-    //                                         slug={slug}
-    //                                         imdb={imdb}
-    //                                         poster={poster}
-    //                                         onClickFn={() => onClickHandler(id)}
-    //                                     />
-    //                                 );
-    //                             })}
-    //                         </div>
-    //                     </div>
-    //                 ) : (
-    //                     <Navigate to="/login" />
-    //                 ),
-    //                 children: [
-    //                     {
-    //                         path: ':idSerie',
-    //                         element: (
-    //                             detailVisible && idSerie !== null && (
-    //                                 <div className="detailsSerie" >
-    //                                     <DetailsSeries
-    //                                         title={details[idSerie].title}
-    //                                         year={details[idSerie].year}
-    //                                         id={details[idSerie].id}
-    //                                         imdb={details[idSerie].imdb}
-    //                                         tagline={details[idSerie].tagline}
-    //                                         overview={details[idSerie].overview}
-    //                                         network={details[idSerie].network}
-    //                                         country={details[idSerie].country}
-    //                                         trailer={details[idSerie].trailer}
-    //                                         status={details[idSerie].status}
-    //                                         rating={details[idSerie].rating}
-    //                                         votes={details[idSerie].votes}
-    //                                         language={details[idSerie].language}
-    //                                         genres={details[idSerie].genres}
-    //                                         aired_episodes={details[idSerie].aired_episodes}
-    //                                         poster={details[idSerie].poster}
-    //                                         onClickFn={clickBackdrop}
-    //                                         onClickFav={() => clickFavorite(details[idSerie])}
-    //                                         favorite={favorite}
-    //                                         saison={details[idSerie].seasons}
-    //                                     />
-    //                                 </div>
-    //                             )
-    //                         )
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 path: 'Profil',
-    //                 element: estConnecte ? (
-    //                     <div className="Profil">
-    //                         <Profil nom={user} nbFav={favorite.length} photo="https://i.pravatar.cc/300" />
-    //                     </div>
-    //                 ) : (
-    //                     <Navigate to="/login" />
-    //                 )
-    //             },
-    //         ]
-    //     },
-
-    //     {
-    //         path: '*',
-    //         element: <Navigate to="/login" />
-    //     }
-    // ];
-    // return <RouterProvider router={createBrowserRouter(routes)} />;
 }
 
 export default App;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link , useLocation } from "react-router-dom";
+import { Link , useLocation} from "react-router-dom";
 import "./Nav.css";
 
 const Nav = ({ links }) => {
@@ -9,7 +9,7 @@ const Nav = ({ links }) => {
     <nav>
       <ul className="nav nav-pills">
         {links.map(({name,url}) => (
-          <li data-cy={`lnk-${url}`} key={name} className={location.pathname.startsWith(url) ? "active": ""}>
+          <li data-cy={`lnk-${url}`} key={name} className={location.pathname.startsWith(url) ? "active": ""} >
             <Link to={url}>{name}</Link>
           </li>
         ))}

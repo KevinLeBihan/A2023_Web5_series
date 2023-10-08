@@ -7,7 +7,7 @@ import { Link,useParams } from "react-router-dom";
 
 
 
-const DetailsSeries = ({ title, year, id, imdb, tagline, overview, network, country, trailer, status, rating, votes, language, genres, aired_episodes, poster, saison, onClickFn, onClickFav, favorite, }) => {
+const DetailsSeries = ({ title, year, id, imdb, tagline, overview, network, country, trailer, status, rating, votes, language, genres, aired_episodes, poster, saison, onClickFn, onClickFav, favorite,lienRendu }) => {
     const traduction =
         status === "returning series" ? "Série qui retourne" :
             status === "continuing" ? "Série qui continue" :
@@ -31,7 +31,7 @@ const DetailsSeries = ({ title, year, id, imdb, tagline, overview, network, coun
     return (
         <div className="Detail-Serie">
             <div className="exit">
-                <Link to="/SeriesTendances">
+                <Link to={"/"+lienRendu}>
                     <button onClick={onClickFn}>X</button>
                 </Link>
             </div>

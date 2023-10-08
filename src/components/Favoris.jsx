@@ -3,10 +3,10 @@ import './Favoris.css'
 
 const Favoris = ({isFav, onClickFn}) => {
     const [favoris, setFavoris] = useState(false)
-    console.log(!setFavoris);
+    // console.log(!setFavoris);
     // let isFavorite = isFav ? 'true' : 'false'
     let isFavorite = favoris ? 'true' : 'false'
-    console.log(isFavorite);
+    // console.log(isFavorite);
     return (
         <div className={isFavorite}>
             {/* <button onClick={() => setFavoris(!favoris)}> */}

@@ -1,11 +1,13 @@
 import DetailsSeries from "./DetailsSeries";
 import Saison from "./Saison";
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet,useParams } from "react-router-dom";
 import "./listeSeries.css";
 
 
 const ListeSeries = ({ title, year, id, slug, imdb, poster, onClickFn }) => {
+    const {serieId} = useParams();
+    console.log(serieId);
     return (
         <>
             <div><Outlet/></div>

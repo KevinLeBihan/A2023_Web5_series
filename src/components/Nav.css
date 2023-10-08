@@ -1,14 +1,16 @@
+
+
 ul.nav {
     display: flex;
     font-size: 1.5em;
     list-style: none;
-    width:2000px ;
+    width:1900px ;
     margin: 2% auto;
 }
 
 ul.nav li {
     display: flex;
-    width: 100%;
+    /* width: 3em; */
     height: 100%;
     width: 100%;
     justify-content: center;

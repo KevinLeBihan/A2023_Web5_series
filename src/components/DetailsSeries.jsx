@@ -3,7 +3,7 @@ import Rating, { MyComponent } from "./Rating";
 import "./Detail.css"
 import Saison from "./Saison";
 import ReactPlayer from 'react-player'
-import { useParams } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 
 
 
@@ -21,19 +21,22 @@ const DetailsSeries = ({ title, year, id, imdb, tagline, overview, network, coun
 
     // const { idSerie } = useParams();
     // const isFav = favorite.some((fav) => fav.id === serieId);
-    console.log(saison);
+    // console.log(saison);
     // console.log(favorite.some((fav) => fav.id));
     // console.log(id);
+
+    const {serieId} = useParams();
+    console.log(serieId);
 
     return (
         <div className="Detail-Serie">
             <div className="exit">
-                <Link to="">
+                <Link to="/SeriesTendances">
                     <button onClick={onClickFn}>X</button>
                 </Link>
             </div>
             <div className="image-video">
-                <img src={poster} alt="poster" className="poster" />
+                <img src={poster} alt="img-poster" className="img-poster" />
                 {/* <iframe width="700" height="450" src={"https://www.youtube.com/embed/EGQChk9zGyQ?si=yRhPmfxTvkncG5AM"} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe> */}
                 <ReactPlayer url={trailer} width={700} height={450} volume={0.5} />
             </div>

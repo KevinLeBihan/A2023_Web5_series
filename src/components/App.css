@@ -1,6 +1,11 @@
+.SeriesTendances{
+    height: 200vh;
+}
+
+
 .SeriesTendances h1.titre{
     width: 617px;
-    margin-left: 10.5%;
+    margin-left: 5%;
     margin-top: 2%;
     border-bottom: 4px solid rgb(255, 222, 7);
     font-size: 5em;
@@ -9,7 +14,7 @@
     display: flex;
     flex-wrap: wrap;
     margin-left: 6%;
-    width: 2000px;
+    width: 1900px;
     gap: 5%;
     margin: 2% auto;
     
@@ -38,15 +43,9 @@
     margin: 0 auto ;
     background-color: rgb(43, 43, 42);
     border-radius: 5%;
-    /* position: fixed; */
+    position: fixed;
     top: 0%;
     left: 30%;
-}
-.detailsSerie img.poster{
-    width:30.4% ;
-}
-.detailsSerie img.poster:hover{
-    width:30.4% ;
 }
 
 div.backdrop_hidden{
@@ -72,7 +71,7 @@ div.backdrop_hidden{
     width: 300px;
 }
 
-/* .fav img.poster{
+.fav img.poster{
     width: 100%;
     margin-bottom: 20%;
     transition: 0.5s;
@@ -81,6 +80,6 @@ div.backdrop_hidden{
 .Tendance img.poster:hover{
     width: 115%;
     transition: .5s;
-} */
+}
 
 

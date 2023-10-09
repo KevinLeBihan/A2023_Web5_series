@@ -3,7 +3,7 @@ import Rating, { MyComponent } from "./Rating";
 import "./Detail.css"
 import Saison from "./Saison";
 import ReactPlayer from 'react-player'
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 
 
@@ -16,18 +16,6 @@ const DetailsSeries = ({ title, year, id, imdb, tagline, overview, network, coun
                         status === "canceled" ? "Annulée" :
                             status === "upcoming" ? "À venir" :
                                 status === "pilot" ? "Essaie" : "Série terminée";
-
-
-
-    // const { idSerie } = useParams();
-    // const isFav = favorite.some((fav) => fav.id === serieId);
-    // console.log(saison);
-    // console.log(favorite.some((fav) => fav.id));
-    // console.log(id);
-
-    const {serieId} = useParams();
-    console.log(serieId);
-
     return (
         <div className="Detail-Serie">
             <div className="exit">

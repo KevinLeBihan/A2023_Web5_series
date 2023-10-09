@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Navigate, RouterProvider, createBrowserRouter, useParams } from "react-router-dom";
 import LogIn from "./LogIn";
 import ListeSeries from "./ListeSeries";
@@ -11,14 +11,22 @@ import Profil from "./Profil";
 import Layout from './Layout';
 
 
-
 const App = () => {
+    const [series, setSeries] = useState([]);
     const [estConnecte, setEstConnecte] = useState(false);
     const [user, setUser] = useState('');
     const [idSerie, setIdSerie] = useState(null);
     const [detailVisible, setDetailVisible] = useState(false);
     const [favorite, setFavorite] = useState([]);
-    const routePresent = useParams();
+    
+    useEffect(() => {
+        const fetchSeries = async () => {
+            const rep = await fetch('http://localhost:3000/api/series/trending');
+            const data = await rep.json();
+            setSeries(data.series);
+        };
+        fetchSeries();
+    },[]);
     // const [estIdentifier, setEstIdentifier] = useState(false); // Assurez-vous de déclarer cette variable si vous en avez besoin
     const detail = detailVisible === false || detailVisible === null ? "Backdrop_hidden" : "Backdrop";
     const onClickHandler = (id) => {
@@ -36,7 +44,6 @@ const App = () => {
         setDetailVisible(false);
 
     };
-    const allo = "";
 
     const clickFavorite = (serie) => {
         setFavorite((prevFavorite) => {
@@ -67,11 +74,12 @@ const App = () => {
                 {
                     path: 'SeriesTendances',
                     element:
-                        estConnecte ? (
+                        estConnecte  ? (
                             <div className="SeriesTendances">
                                 <h1 className="titre">Séries Tendances</h1>
                                 <div className="Tendance">
-                                    {list_series.map(({ title, year, id, slug, imdb, poster }) => {
+                                    {
+                                    series.map(({ title, year, id, slug, imdb, poster }) => {
                                         return (
                                             <ListeSeries
                                                 key={id}
@@ -89,9 +97,7 @@ const App = () => {
                                 </div>
                             </div>
                             
-                        ) : (
-                            <Navigate to="/login" replace/>
-                        ),
+                        ) : (<Navigate to="/login" replace/>),
                     children:
                         [
                             {
@@ -100,7 +106,7 @@ const App = () => {
                                     (detailVisible && idSerie !== null &&
                                         <div className="detailsSerie" >
                                             <DetailsSeries
-                                                title={details[idSerie].title}
+                                                title={series[serieId].title}
                                                 year={details[idSerie].year}
                                                 id={details[idSerie].id}
                                                 imdb={details[idSerie].imdb}
@@ -131,7 +137,7 @@ const App = () => {
                 {
                     path: 'Series-fav',
                     element:
-                        (
+                    estConnecte ? (
                             <div className="Series-fav">
                                 <h1 className="titre">Séries favoris</h1>
                                 <div className="fav">
@@ -152,7 +158,7 @@ const App = () => {
                                     })}
                                 </div>
                             </div>
-                        ),
+                        ) : (<Navigate to="/login" replace/>),
                         children:
                         [
                             {

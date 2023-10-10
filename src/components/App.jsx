@@ -12,6 +12,8 @@ import Layout from './Layout';
 
 
 const App = () => {
+
+
     const [series, setSeries] = useState([]);
     const [estConnecte, setEstConnecte] = useState(false);
     const [user, setUser] = useState('');
@@ -106,26 +108,9 @@ const App = () => {
                                     (detailVisible && idSerie !== null &&
                                         <div className="detailsSerie" >
                                             <DetailsSeries
-                                                title={series[serieId].title}
-                                                year={details[idSerie].year}
-                                                id={details[idSerie].id}
-                                                imdb={details[idSerie].imdb}
-                                                tagline={details[idSerie].tagline}
-                                                overview={details[idSerie].overview}
-                                                network={details[idSerie].network}
-                                                country={details[idSerie].country}
-                                                trailer={details[idSerie].trailer}
-                                                status={details[idSerie].status}
-                                                rating={details[idSerie].rating}
-                                                votes={details[idSerie].votes}
-                                                language={details[idSerie].language}
-                                                genres={details[idSerie].genres}
-                                                aired_episodes={details[idSerie].aired_episodes}
-                                                poster={details[idSerie].poster}
                                                 onClickFn={clickBackdrop}
-                                                onClickFav={() => clickFavorite(details[idSerie])}
+                                                // onClickFav={() => clickFavorite(details[idSerie])}
                                                 favorite={favorite}
-                                                saison={details[idSerie].seasons}
                                                 lienRendu = {mesLiens[0]}
                                             />
                                         </div>

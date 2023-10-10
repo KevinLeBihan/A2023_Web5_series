@@ -17,7 +17,7 @@ div.Detail-Serie div.section{
     gap: 2%;
 }
 
-.autre-info{
+section.autre-info{
     display: flex;
     flex-direction: column;
     gap: 2%;

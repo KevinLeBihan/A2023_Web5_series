@@ -1,39 +1,59 @@
 import React, { useState } from 'react';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-const LogIn = ({ onLogin, estConnecte, updateUser }) => {
-    const [user, setUser] = useState('');
-    const [password, setPassword] = useState('');
+const LogIn = ({ onLoginFn,updateUser}) => {
+
+    const [auth, setAuth] = useState({
+        username: "",
+        password: "",
+    });
     const navigate = useNavigate();
-    console.log(estConnecte);
 
-    const onChangeHandlerUser = (e) => {
-        setUser(e.target.value);
-        // console.log(e.target.value);
-    };
-    const onChangeHandlerMDP = (e) => {
-        setPassword(e.target.value);
-        // console.log(e.target.value);
+    const updateState = (e) => {
+        setAuth({ ...auth, [e.target.name]: e.target.value });
     };
 
-    const Verifier = () => {
-        // Vérifiez le nom d'utilisateur et le mot de passe ici
-        if (user.trim() !== '' && password.trim() !== '') {
-            onLogin();
-            updateUser(user);
+    const isValid = () => {
+        return auth.username.trim() !== "" && auth.password.trim() !== "";
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isValid()) {
+            // updateUser(auth.username);
+            onLoginFn(auth.username);
             navigate("/SeriesTendances");
         }
-    }
+    };
+
     return (
         <>
             <div className="InputUser">
-                <input data-cy={`username-input`} onChange={onChangeHandlerUser} value={user} type="text" className="InputUser" placeholder="Username" />
-                <input data-cy={`password`} onChange={onChangeHandlerMDP} value={password} type="text" className="InputMDP" placeholder="Password" />
+                <input
+                    data-cy="username-input"
+                    onChange={updateState}
+                    value={auth.username}
+                    name="username"
+                    type="text"
+                    className="InputUser"
+                    placeholder="Username"
+                />
+                <input
+                    data-cy="password"
+                    onChange={updateState}
+                    value={auth.password}
+                    name="password"
+                    type="password"
+                    className="InputMDP"
+                    placeholder="Password"
+                />
             </div>
-            <button data-cy={`login`} disabled={user.trim() === "" && password.trim() === ""} onClick={Verifier} className="Verifier">Se connecter</button>
+            <button data-cy="login" disabled={!isValid()} onClick={handleSubmit} className="Verifier">
+                Se connecter
+            </button>
         </>
-    )
+    );
 }
 
 export default LogIn;

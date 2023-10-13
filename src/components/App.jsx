@@ -3,9 +3,8 @@ import { Navigate, RouterProvider, createBrowserRouter, useParams } from "react-
 import LogIn from "./LogIn";
 import ListeSeries from "./ListeSeries";
 import "./App.css";
-
+import { useStorage } from '../hooks/useStorage';
 import DetailsSeries from "./DetailsSeries";
-
 import Saison from "./Saison";
 import Profil from "./Profil";
 import Layout from './Layout';
@@ -13,10 +12,12 @@ import Layout from './Layout';
 
 const App = () => {
 
-
+    const {saveToStorage, getFromStorage,removeFromStorage } = useStorage('serie-')
+    const savedUser = getFromStorage('username');
+    const [username, setUsername] = useState("");
+    // const [user, setUser] = useState("");
     const [series, setSeries] = useState([]);
     const [estConnecte, setEstConnecte] = useState(false);
-    const [user, setUser] = useState('');
     const [indexSerie, setIndexSerie] = useState(null);
     const [detailVisible, setDetailVisible] = useState(false);
     const [favorite, setFavorite] = useState([]);
@@ -26,11 +27,24 @@ const App = () => {
             const rep = await fetch('http://localhost:3000/api/series/trending');
             const data = await rep.json();
             setSeries(data.series);
-            console.log(data)
         };
         fetchSeries();
     },[]);
-    // const [estIdentifier, setEstIdentifier] = useState(false); // Assurez-vous de déclarer cette variable si vous en avez besoin
+    const LoginHandler = (user) => {
+        setUsername(user);
+        saveToStorage('username',user);
+    }
+    useEffect(() => {
+        if(savedUser){
+            setUsername(savedUser)
+            // setUser(savedUser);
+            console.log(savedUser);
+            setEstConnecte(true);
+            console.log(estConnecte);
+        }
+    },[savedUser]);
+
+    
     const detail = detailVisible === false || detailVisible === null ? "Backdrop_hidden" : "Backdrop";
     const onClickHandler = (index) => {
         setDetailVisible(true);
@@ -39,15 +53,23 @@ const App = () => {
         console.log(detailVisible);
     };
 
-    const updateUser = (newUser) => {
-        setUser(newUser)
-    };
+
+    // const updateUser = (newUser) => {
+    //     setUser(newUser)
+    //     saveToStorage('username', newUser);
+        
+    // };
 
     const clickBackdrop = () => {
         setDetailVisible(false);
 
     };
 
+    const removeUserFromStorage = () => {
+        removeFromStorage('username'); // Supprimez le nom d'utilisateur du stockage
+        setEstConnecte(false);
+    }
+   
     console.log(indexSerie);
 
     const clickFavorite = (index) => {
@@ -76,7 +98,8 @@ const App = () => {
                 },
                 {
                     path: 'login',
-                    element: estConnecte === false ? (<LogIn onLogin={() => setEstConnecte(true)} estConnecte={estConnecte} updateUser={updateUser} />) : (<Navigate to="/SeriesTendances" />)
+                    // element: estConnecte === false ? (<LogIn onLogin={() => setEstConnecte(true)} estConnecte={estConnecte} updateUser={updateUser} />) : (<Navigate to="/SeriesTendances" />)
+                    element: estConnecte === false ? (<LogIn onLoginFn={LoginHandler} estConnecter={()=>setEstConnecte(true)} />) : (<Navigate to="/SeriesTendances" />)
                 },
                 {
                     path: 'SeriesTendances',
@@ -175,7 +198,7 @@ const App = () => {
                     element:
                         (
                             <div className="Profil">
-                                <Profil nom={user} nbFav={favorite.length} photo="https://i.pravatar.cc/300" cEstDeco={()=> setEstConnecte(false)} />
+                                <Profil nom={username} nbFav={favorite.length} photo="https://i.pravatar.cc/300" cEstDeco={removeUserFromStorage} />
                             </div>
                         )
                 },

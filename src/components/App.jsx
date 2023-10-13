@@ -3,9 +3,9 @@ import { Navigate, RouterProvider, createBrowserRouter, useParams } from "react-
 import LogIn from "./LogIn";
 import ListeSeries from "./ListeSeries";
 import "./App.css";
-import list_series from "../../series_etape2_list.json";
+
 import DetailsSeries from "./DetailsSeries";
-import details from "../../series_etape2_details.json";
+
 import Saison from "./Saison";
 import Profil from "./Profil";
 import Layout from './Layout';
@@ -17,7 +17,7 @@ const App = () => {
     const [series, setSeries] = useState([]);
     const [estConnecte, setEstConnecte] = useState(false);
     const [user, setUser] = useState('');
-    const [idSerie, setIdSerie] = useState(null);
+    const [indexSerie, setIndexSerie] = useState(null);
     const [detailVisible, setDetailVisible] = useState(false);
     const [favorite, setFavorite] = useState([]);
     
@@ -26,15 +26,16 @@ const App = () => {
             const rep = await fetch('http://localhost:3000/api/series/trending');
             const data = await rep.json();
             setSeries(data.series);
+            console.log(data)
         };
         fetchSeries();
     },[]);
     // const [estIdentifier, setEstIdentifier] = useState(false); // Assurez-vous de déclarer cette variable si vous en avez besoin
     const detail = detailVisible === false || detailVisible === null ? "Backdrop_hidden" : "Backdrop";
-    const onClickHandler = (id) => {
+    const onClickHandler = (index) => {
         setDetailVisible(true);
-        setIdSerie(id);
-        console.log(id);
+        setIndexSerie(index);
+        
         console.log(detailVisible);
     };
 
@@ -47,15 +48,19 @@ const App = () => {
 
     };
 
-    const clickFavorite = (serie) => {
+    console.log(indexSerie);
+
+    const clickFavorite = (index) => {
+        console.log(index);
         setFavorite((prevFavorite) => {
-            const isFav = prevFavorite.some((fav) => fav.id === serie.id);
+            const isFav = prevFavorite.some((fav) => fav === index);
             if (isFav) {
-                return prevFavorite.filter((fav) => fav.id !== serie.id);
+                return prevFavorite.filter((fav) => fav !== index);
             } else {
-                return [...prevFavorite, serie];
+                return [...prevFavorite, index];
             }
         });
+        console.log(favorite);
     };
 
     const mesLiens = ['SeriesTendances', 'Series-fav']
@@ -81,7 +86,7 @@ const App = () => {
                                 <h1 className="titre">Séries Tendances</h1>
                                 <div className="Tendance">
                                     {
-                                    series.map(({ title, year, id, slug, imdb, poster }) => {
+                                    series.map(({ title, year, id, slug, imdb, poster },index) => {
                                         return (
                                             <ListeSeries
                                                 key={id}
@@ -91,7 +96,7 @@ const App = () => {
                                                 slug={slug}
                                                 imdb={imdb}
                                                 poster={poster}
-                                                onClickFn={() => onClickHandler(id)}
+                                                onClickFn={() => onClickHandler(index)}
                                                 lienRendu = {mesLiens[0]}
                                             />
                                         );
@@ -105,11 +110,11 @@ const App = () => {
                             {
                                 path: '/SeriesTendances/:serieId',
                                 element:
-                                    (detailVisible && idSerie !== null &&
+                                    (detailVisible && indexSerie !== null &&
                                         <div className="detailsSerie" >
                                             <DetailsSeries
                                                 onClickFn={clickBackdrop}
-                                                // onClickFav={() => clickFavorite(details[idSerie])}
+                                                onClickFav={() => clickFavorite(indexSerie)}
                                                 favorite={favorite}
                                                 lienRendu = {mesLiens[0]}
                                             />
@@ -126,17 +131,18 @@ const App = () => {
                             <div className="Series-fav">
                                 <h1 className="titre">Séries favoris</h1>
                                 <div className="fav">
-                                    {favorite.map(({ title, year, id, slug, imdb, poster }) => {
+                                    {favorite.map((index) => {
+                                        const favoriteSeries = series[index];
                                         return (
                                             <ListeSeries
-                                                key={id}
-                                                title={title}
-                                                year={year}
-                                                id={id}
-                                                slug={slug}
-                                                imdb={imdb}
-                                                poster={poster}
-                                                onClickFn={() => onClickHandler(id)}
+                                                key={favoriteSeries.id}
+                                                title={favoriteSeries.title}
+                                                year={favoriteSeries.year}
+                                                id={favoriteSeries.id}
+                                                slug={favoriteSeries.slug}
+                                                imdb={favoriteSeries.imdb}
+                                                poster={favoriteSeries.poster}
+                                                onClickFn={() => onClickHandler(index)}
                                                 lienRendu = {mesLiens[1]}
                                             />
                                         );
@@ -150,29 +156,12 @@ const App = () => {
                                 path: '/Series-fav/:serieId',
                                 element:
 
-                                    (detailVisible && idSerie !== null &&
+                                    (detailVisible && indexSerie !== null &&
                                         <div className="detailsSerie" >
                                             <DetailsSeries
-                                                title={details[idSerie].title}
-                                                year={details[idSerie].year}
-                                                id={details[idSerie].id}
-                                                imdb={details[idSerie].imdb}
-                                                tagline={details[idSerie].tagline}
-                                                overview={details[idSerie].overview}
-                                                network={details[idSerie].network}
-                                                country={details[idSerie].country}
-                                                trailer={details[idSerie].trailer}
-                                                status={details[idSerie].status}
-                                                rating={details[idSerie].rating}
-                                                votes={details[idSerie].votes}
-                                                language={details[idSerie].language}
-                                                genres={details[idSerie].genres}
-                                                aired_episodes={details[idSerie].aired_episodes}
-                                                poster={details[idSerie].poster}
                                                 onClickFn={clickBackdrop}
-                                                onClickFav={() => clickFavorite(details[idSerie])}
+                                                onClickFav={() => clickFavorite(indexSerie)}
                                                 favorite={favorite}
-                                                saison={details[idSerie].seasons}
                                                 lienRendu = {mesLiens[1]}
                                             />
                                         </div>

@@ -6,6 +6,8 @@ import "./listeSeries.css";
 
 
 const ListeSeries = ({ title, year, id, slug, imdb, poster, onClickFn,lienRendu }) => {
+
+    console.log();
     return (
         <>
             <div><Outlet/></div>

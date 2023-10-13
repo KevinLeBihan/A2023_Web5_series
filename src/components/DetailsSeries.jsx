@@ -20,7 +20,7 @@ const DetailsSeries = ({ onClickFn, onClickFav, favorite, lienRendu }) => {
         };
         fetchSeries();
     }, []);
-    console.log(detail);
+    // console.log(detail);
     const traduction =
         detail.status === "returning series" ? "Série qui retourne" :
             detail.status === "continuing" ? "Série qui continue" :

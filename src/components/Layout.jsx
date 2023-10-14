@@ -12,6 +12,7 @@ const Layout = ({estConnecte}) => {
           :[
           { name: "Séries tendances", url: "/SeriesTendances" },
           { name: "Séries favorites", url: "/Series-fav" },
+          { name: "Recherche",url:"/recherche"},
           { name: "Profil", url: "/Profil" },
         ]}
       />

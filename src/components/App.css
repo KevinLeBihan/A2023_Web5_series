@@ -76,6 +76,37 @@ div.backdrop_hidden{
     margin-bottom: 20%;
     transition: 0.5s;
 }
+div.RechercheSeries input.inputRecherche{
+    width: 22em;
+    height: 2em;
+    position: relative;
+    left: 82.3%;
+    margin-top: 5%;
+}
+.RechercheSeries h1.titre{
+    width: 378px;
+    margin-left: 5%;
+    margin-top: 2%;
+    border-bottom: 4px solid rgb(255, 222, 7);
+    font-size: 4em;
+}
+.Recherche{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 6%;
+    width: 1900px;
+    gap: 5%;
+    margin: 2% auto;
+}
+.Recherche div.Serie{
+    width: 300px;
+}
+
+.Recherche img.poster{
+    width: 100%;
+    margin-bottom: 20%;
+    transition: 0.5s;
+}
 
 .Tendance img.poster:hover{
     width: 110%;

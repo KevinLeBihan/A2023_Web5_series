@@ -23,6 +23,8 @@ const App = () => {
     const [indexSerie, setIndexSerie] = useState(null);
     const [detailVisible, setDetailVisible] = useState(false);
     const [favorite, setFavorite] = useState([savedFavorite || []]);
+    const [search, setSearch] = useState("");
+    const [seriesRecherche, setSeriesRecherche] = useState([]);
 
     useEffect(() => {
         const fetchSeries = async () => {
@@ -49,18 +51,18 @@ const App = () => {
         if (savedFavorite) {
             setFavorite(savedFavorite);
         }
-        else{
+        else {
             setFavorite([]);
         }
-    },[]);
+    }, []);
+    useEffect(() => {
+        const filtre = series.filter((serie) =>
+            serie.title.toLowerCase().includes(search.toLowerCase())
+        );
+        setSeriesRecherche(filtre);
+    }, [series, search]);
 
-    // useEffect(() => {
-    //     if (favorite.length > 0) {
-    //         saveToStorage('favorites', favorite);
-    //     } else {
-    //         removeFromStorage('favorites'); // Remove from storage when empty
-    //     }
-    // }, [favorite]);
+   
     const detail = detailVisible === false || detailVisible === null ? "Backdrop_hidden" : "Backdrop";
     const onClickHandler = (index) => {
         setDetailVisible(true);
@@ -69,13 +71,6 @@ const App = () => {
         console.log(detailVisible);
     };
 
-
-    // const updateUser = (newUser) => {
-    //     setUser(newUser)
-    //     saveToStorage('username', newUser);
-
-    // };
-
     const clickBackdrop = () => {
         setDetailVisible(false);
 
@@ -83,7 +78,7 @@ const App = () => {
 
     const clearFromStorage = () => {
         removeFromStorage('username');
-        removeFromStorage('favorites'); 
+        removeFromStorage('favorites');
         setFavorite([]);
         setEstConnecte(false);
     }
@@ -95,11 +90,11 @@ const App = () => {
             const isFav = prevFavorite.some((fav) => fav === index);
             if (isFav) {
                 const updatedFavorites = prevFavorite.filter((fav) => fav !== index);
-                saveToStorage('favorites', updatedFavorites); 
+                saveToStorage('favorites', updatedFavorites);
                 return updatedFavorites;
             } else {
                 const updatedFavorites = [...prevFavorite, index];
-                saveToStorage('favorites', updatedFavorites); 
+                saveToStorage('favorites', updatedFavorites);
                 return updatedFavorites;
             }
         });
@@ -107,7 +102,7 @@ const App = () => {
 
 
     console.log(favorite);
-    const mesLiens = ['SeriesTendances', 'Series-fav']
+    const mesLiens = ['SeriesTendances', 'Series-fav', 'recherche']
 
     const routes = [
         {
@@ -120,7 +115,6 @@ const App = () => {
                 },
                 {
                     path: 'login',
-                    // element: estConnecte === false ? (<LogIn onLogin={() => setEstConnecte(true)} estConnecte={estConnecte} updateUser={updateUser} />) : (<Navigate to="/SeriesTendances" />)
                     element: estConnecte === false ? (<LogIn onLoginFn={LoginHandler} estConnecter={() => setEstConnecte(true)} />) : (<Navigate to="/SeriesTendances" />)
                 },
                 {
@@ -128,6 +122,7 @@ const App = () => {
                     element:
                         estConnecte ? (
                             <div className="SeriesTendances">
+
                                 <h1 className="titre">Séries Tendances</h1>
                                 <div className="Tendance">
                                     {
@@ -210,6 +205,54 @@ const App = () => {
                                                 onClickFav={() => clickFavorite(indexSerie)}
                                                 favorite={favorite}
                                                 lienRendu={mesLiens[1]}
+                                            />
+                                        </div>
+                                    )
+
+                            }
+                        ]
+                },
+                {
+                    path: 'recherche',
+                    element:
+                        estConnecte ? (
+                            <div className="RechercheSeries">
+                                <input className='inputRecherche' type="text" placeholder="Rechercher par titre" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                                <h1 className="titre">Recherche</h1>
+                                <div className="Recherche">
+                                    {
+                                        seriesRecherche.map(({ title, year, id, slug, imdb, poster }, index) => {
+                                            return (
+                                                <ListeSeries
+                                                    key={id}
+                                                    title={title}
+                                                    year={year}
+                                                    id={id}
+                                                    slug={slug}
+                                                    imdb={imdb}
+                                                    poster={poster}
+                                                    onClickFn={() => onClickHandler(index)}
+                                                    lienRendu={mesLiens[2]}
+                                                />
+                                            );
+                                        })
+                                    }
+                                </div>
+                            </div>
+
+                        ) : (<Navigate to="/login" replace />),
+                    children:
+                        [
+                            {
+                                path: '/recherche/:serieId',
+                                element:
+                                    (detailVisible && indexSerie !== null &&
+                                        <div className="detailsSerie" >
+                                            <DetailsSeries
+                                                onClickFn={clickBackdrop}
+                                                onClickFav={() => clickFavorite(indexSerie)}
+                                                favorite={favorite}
+                                                lienRendu={mesLiens[2]}
                                             />
                                         </div>
                                     )

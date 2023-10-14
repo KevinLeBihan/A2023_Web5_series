@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate, RouterProvider, createBrowserRouter, useParams } from "react-router-dom";
 import LogIn from "./LogIn";
 import ListeSeries from "./ListeSeries";
@@ -12,16 +12,18 @@ import Layout from './Layout';
 
 const App = () => {
 
-    const {saveToStorage, getFromStorage,removeFromStorage } = useStorage('serie-')
+    const { saveToStorage, getFromStorage, removeFromStorage } = useStorage('serie-')
     const savedUser = getFromStorage('username');
     const [username, setUsername] = useState("");
+    const savedFavorite = getFromStorage('favorites');
+
     // const [user, setUser] = useState("");
     const [series, setSeries] = useState([]);
     const [estConnecte, setEstConnecte] = useState(false);
     const [indexSerie, setIndexSerie] = useState(null);
     const [detailVisible, setDetailVisible] = useState(false);
-    const [favorite, setFavorite] = useState([]);
-    
+    const [favorite, setFavorite] = useState([savedFavorite || []]);
+
     useEffect(() => {
         const fetchSeries = async () => {
             const rep = await fetch('http://localhost:3000/api/series/trending');
@@ -29,27 +31,41 @@ const App = () => {
             setSeries(data.series);
         };
         fetchSeries();
-    },[]);
+    }, []);
     const LoginHandler = (user) => {
         setUsername(user);
-        saveToStorage('username',user);
+        saveToStorage('username', user);
     }
     useEffect(() => {
-        if(savedUser){
+        if (savedUser) {
             setUsername(savedUser)
             // setUser(savedUser);
             console.log(savedUser);
             setEstConnecte(true);
             console.log(estConnecte);
         }
-    },[savedUser]);
+    }, [savedUser]);
+    useEffect(() => {
+        if (savedFavorite) {
+            setFavorite(savedFavorite);
+        }
+        else{
+            setFavorite([]);
+        }
+    },[]);
 
-    
+    // useEffect(() => {
+    //     if (favorite.length > 0) {
+    //         saveToStorage('favorites', favorite);
+    //     } else {
+    //         removeFromStorage('favorites'); // Remove from storage when empty
+    //     }
+    // }, [favorite]);
     const detail = detailVisible === false || detailVisible === null ? "Backdrop_hidden" : "Backdrop";
     const onClickHandler = (index) => {
         setDetailVisible(true);
         setIndexSerie(index);
-        
+
         console.log(detailVisible);
     };
 
@@ -57,7 +73,7 @@ const App = () => {
     // const updateUser = (newUser) => {
     //     setUser(newUser)
     //     saveToStorage('username', newUser);
-        
+
     // };
 
     const clickBackdrop = () => {
@@ -65,26 +81,32 @@ const App = () => {
 
     };
 
-    const removeUserFromStorage = () => {
-        removeFromStorage('username'); // Supprimez le nom d'utilisateur du stockage
+    const clearFromStorage = () => {
+        removeFromStorage('username');
+        removeFromStorage('favorites'); 
+        setFavorite([]);
         setEstConnecte(false);
     }
-   
-    console.log(indexSerie);
+
+    // console.log(indexSerie);
 
     const clickFavorite = (index) => {
-        console.log(index);
         setFavorite((prevFavorite) => {
             const isFav = prevFavorite.some((fav) => fav === index);
             if (isFav) {
-                return prevFavorite.filter((fav) => fav !== index);
+                const updatedFavorites = prevFavorite.filter((fav) => fav !== index);
+                saveToStorage('favorites', updatedFavorites); 
+                return updatedFavorites;
             } else {
-                return [...prevFavorite, index];
+                const updatedFavorites = [...prevFavorite, index];
+                saveToStorage('favorites', updatedFavorites); 
+                return updatedFavorites;
             }
         });
-        console.log(favorite);
     };
 
+
+    console.log(favorite);
     const mesLiens = ['SeriesTendances', 'Series-fav']
 
     const routes = [
@@ -99,35 +121,35 @@ const App = () => {
                 {
                     path: 'login',
                     // element: estConnecte === false ? (<LogIn onLogin={() => setEstConnecte(true)} estConnecte={estConnecte} updateUser={updateUser} />) : (<Navigate to="/SeriesTendances" />)
-                    element: estConnecte === false ? (<LogIn onLoginFn={LoginHandler} estConnecter={()=>setEstConnecte(true)} />) : (<Navigate to="/SeriesTendances" />)
+                    element: estConnecte === false ? (<LogIn onLoginFn={LoginHandler} estConnecter={() => setEstConnecte(true)} />) : (<Navigate to="/SeriesTendances" />)
                 },
                 {
                     path: 'SeriesTendances',
                     element:
-                        estConnecte  ? (
+                        estConnecte ? (
                             <div className="SeriesTendances">
                                 <h1 className="titre">Séries Tendances</h1>
                                 <div className="Tendance">
                                     {
-                                    series.map(({ title, year, id, slug, imdb, poster },index) => {
-                                        return (
-                                            <ListeSeries
-                                                key={id}
-                                                title={title}
-                                                year={year}
-                                                id={id}
-                                                slug={slug}
-                                                imdb={imdb}
-                                                poster={poster}
-                                                onClickFn={() => onClickHandler(index)}
-                                                lienRendu = {mesLiens[0]}
-                                            />
-                                        );
-                                    })}
+                                        series.map(({ title, year, id, slug, imdb, poster }, index) => {
+                                            return (
+                                                <ListeSeries
+                                                    key={id}
+                                                    title={title}
+                                                    year={year}
+                                                    id={id}
+                                                    slug={slug}
+                                                    imdb={imdb}
+                                                    poster={poster}
+                                                    onClickFn={() => onClickHandler(index)}
+                                                    lienRendu={mesLiens[0]}
+                                                />
+                                            );
+                                        })}
                                 </div>
                             </div>
-                            
-                        ) : (<Navigate to="/login" replace/>),
+
+                        ) : (<Navigate to="/login" replace />),
                     children:
                         [
                             {
@@ -139,7 +161,7 @@ const App = () => {
                                                 onClickFn={clickBackdrop}
                                                 onClickFav={() => clickFavorite(indexSerie)}
                                                 favorite={favorite}
-                                                lienRendu = {mesLiens[0]}
+                                                lienRendu={mesLiens[0]}
                                             />
                                         </div>
                                     )
@@ -149,13 +171,13 @@ const App = () => {
                 },
                 {
                     path: 'Series-fav',
-                    element:
-                    estConnecte ? (
-                            <div className="Series-fav">
-                                <h1 className="titre">Séries favoris</h1>
-                                <div className="fav">
-                                    {favorite.map((index) => {
-                                        const favoriteSeries = series[index];
+                    element: estConnecte ? (
+                        <div className="Series-fav">
+                            <h1 className="titre">Séries favoris</h1>
+                            <div className="fav">
+                                {favorite.map((index) => {
+                                    const favoriteSeries = series[index];
+                                    if (favoriteSeries) {
                                         return (
                                             <ListeSeries
                                                 key={favoriteSeries.id}
@@ -166,14 +188,16 @@ const App = () => {
                                                 imdb={favoriteSeries.imdb}
                                                 poster={favoriteSeries.poster}
                                                 onClickFn={() => onClickHandler(index)}
-                                                lienRendu = {mesLiens[1]}
+                                                lienRendu={mesLiens[1]}
                                             />
                                         );
-                                    })}
-                                </div>
+                                    }
+                                    return null; // handle the case where favoriteSeries is undefined
+                                })}
                             </div>
-                        ) : (<Navigate to="/login" replace/>),
-                        children:
+                        </div>
+                    ) : (<Navigate to="/login" replace />),
+                    children:
                         [
                             {
                                 path: '/Series-fav/:serieId',
@@ -185,7 +209,7 @@ const App = () => {
                                                 onClickFn={clickBackdrop}
                                                 onClickFav={() => clickFavorite(indexSerie)}
                                                 favorite={favorite}
-                                                lienRendu = {mesLiens[1]}
+                                                lienRendu={mesLiens[1]}
                                             />
                                         </div>
                                     )
@@ -198,7 +222,7 @@ const App = () => {
                     element:
                         (
                             <div className="Profil">
-                                <Profil nom={username} nbFav={favorite.length} photo="https://i.pravatar.cc/300" cEstDeco={removeUserFromStorage} />
+                                <Profil nom={username} nbFav={favorite.length} fav={favorite} photo="https://i.pravatar.cc/300" cEstDeco={clearFromStorage} />
                             </div>
                         )
                 },

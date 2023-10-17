@@ -6,7 +6,7 @@ const Profil = ({ nom, nbFav, photo , cEstDeco}) => {
     return (
         <div className="conteneur-profil">
             <div className="profil">
-                <div className="Deco" onClick={cEstDeco}>
+                <div className="Deco" data-cy="btn-deco" onClick={cEstDeco}>
                     {/* <Link to={"/login"} className="lien"/>
                         <FaDoorOpen />
                     </Link> */}
@@ -18,7 +18,7 @@ const Profil = ({ nom, nbFav, photo , cEstDeco}) => {
                     <img src={photo} alt="" />
                 </div>
                 <div className="nom">
-                    <h1>{nom}</h1>
+                    <h1 data-cy="nom-utilisateur">{nom}</h1>
                 </div>
                 <div className="nbFav">
                     <h2>Nombre de séries aimées {nbFav} <FaHeart /></h2>

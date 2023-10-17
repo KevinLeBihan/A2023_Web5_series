@@ -23,7 +23,7 @@ const LogIn = ({ onLoginFn,updateUser}) => {
         if (isValid()) {
             // updateUser(auth.username);
             onLoginFn(auth.username);
-            navigate("/SeriesTendances");
+            navigate("/series-tendances");
         }
     };
 

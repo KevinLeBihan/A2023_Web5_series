@@ -4,6 +4,10 @@ div.false{
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    /* right: 160px; */
+    left: 50px;
+    bottom:20px
 }
 
 div.false button svg{
@@ -14,9 +18,7 @@ div.false button svg{
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    right: 160px;
-    bottom:18px
+    
 }
 
 div.false button{

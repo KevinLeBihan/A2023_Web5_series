@@ -53,6 +53,7 @@ section.info-serie p.votes{
 }
 section.info-serie div.commentaire{
    display: flex;
+   width:300px ;
 }
 section.eval p{
     margin-top: 1%;

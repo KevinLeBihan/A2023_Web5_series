@@ -33,8 +33,8 @@ const DetailsSeries = ({ onClickFn, onClickFav, favorite, lienRendu }) => {
     return (
         <div className="Detail-Serie">
             <div className="exit">
-                <Link to={"/" + lienRendu}>
-                    <button onClick={onClickFn}>X</button>
+                <Link to={"/" + lienRendu} data-cy="retour">
+                    <button onClick={onClickFn} data-cy="btn-retour">X</button>
                 </Link>
             </div>
             <div className="image-video">

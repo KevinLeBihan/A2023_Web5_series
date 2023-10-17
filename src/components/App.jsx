@@ -102,7 +102,7 @@ const App = () => {
 
 
     console.log(favorite);
-    const mesLiens = ['SeriesTendances', 'Series-fav', 'recherche']
+    const mesLiens = ['series-tendances', 'series-fav', 'recherche']
 
     const routes = [
         {
@@ -115,10 +115,10 @@ const App = () => {
                 },
                 {
                     path: 'login',
-                    element: estConnecte === false ? (<LogIn onLoginFn={LoginHandler} estConnecter={() => setEstConnecte(true)} />) : (<Navigate to="/SeriesTendances" />)
+                    element: estConnecte === false ? (<LogIn onLoginFn={LoginHandler} estConnecter={() => setEstConnecte(true)} />) : (<Navigate to="/series-tendances" />)
                 },
                 {
-                    path: 'SeriesTendances',
+                    path: 'series-tendances',
                     element:
                         estConnecte ? (
                             <div className="SeriesTendances">
@@ -148,7 +148,7 @@ const App = () => {
                     children:
                         [
                             {
-                                path: '/SeriesTendances/:serieId',
+                                path: '/series-tendances/:serieId',
                                 element:
                                     (detailVisible && indexSerie !== null &&
                                         <div className="detailsSerie" >
@@ -165,11 +165,11 @@ const App = () => {
                         ]
                 },
                 {
-                    path: 'Series-fav',
+                    path: 'series-fav',
                     element: estConnecte ? (
                         <div className="Series-fav">
                             <h1 className="titre">Séries favoris</h1>
-                            <div className="fav">
+                            <div className="fav" data-cy="favoris">
                                 {favorite.map((index) => {
                                     const favoriteSeries = series[index];
                                     if (favoriteSeries) {
@@ -195,7 +195,7 @@ const App = () => {
                     children:
                         [
                             {
-                                path: '/Series-fav/:serieId',
+                                path: '/series-fav/:serieId',
                                 element:
 
                                     (detailVisible && indexSerie !== null &&
@@ -217,9 +217,9 @@ const App = () => {
                     element:
                         estConnecte ? (
                             <div className="RechercheSeries">
-                                <input className='inputRecherche' type="text" placeholder="Rechercher par titre" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                                <input className='inputRecherche' type="text" placeholder="Rechercher par titre" data-cy='recherche' value={search} onChange={(e) => setSearch(e.target.value)}/>
                                 <h1 className="titre">Recherche</h1>
-                                <div className="Recherche">
+                                <div className="Recherche" >
                                     {
                                         seriesRecherche.map(({ title, year, id, slug, imdb, poster }, index) => {
                                             return (
@@ -263,11 +263,11 @@ const App = () => {
                 {
                     path: 'profil',
                     element:
-                        (
+                        estConnecte ?   (
                             <div className="Profil">
                                 <Profil nom={username} nbFav={favorite.length} fav={favorite} photo="https://i.pravatar.cc/300" cEstDeco={clearFromStorage} />
                             </div>
-                        )
+                        ): (<Navigate to="/login" replace />)
                 },
                 {
                     path: '*',

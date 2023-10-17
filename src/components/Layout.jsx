@@ -10,10 +10,10 @@ const Layout = ({estConnecte}) => {
         links={estConnecte === false ? 
           [{ name: "Login", url: "/login" }]
           :[
-          { name: "Séries tendances", url: "/SeriesTendances" },
-          { name: "Séries favorites", url: "/Series-fav" },
+          { name: "Séries tendances", url: "/series-tendances" },
+          { name: "Séries favorites", url: "/series-fav" },
           { name: "Recherche",url:"/recherche"},
-          { name: "Profil", url: "/Profil" },
+          { name: "Profil", url: "/profil" },
         ]}
       />
 

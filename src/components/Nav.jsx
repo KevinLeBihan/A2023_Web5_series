@@ -5,10 +5,12 @@ import "./Nav.css";
 const Nav = ({ links }) => {
 
   const location = useLocation();
+  
   return (
     <nav>
       <ul className="nav nav-pills">
         {links.map(({name,url}) => (
+          
           <li data-cy={`lnk-${url}`} key={name} className={location.pathname.startsWith(url) ? "active": ""} >
             <Link to={url}>{name}</Link>
           </li>

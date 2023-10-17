@@ -28,11 +28,14 @@ div.false button{
 }
 
 div.true{
-    /* background-color: red;s */
     width: 7%;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    /* right: 160px; */
+    left: 50px;
+    bottom:20px
 }
 
 div.true button svg{
@@ -43,9 +46,6 @@ div.true button svg{
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    right: 160px;
-    bottom:18px
 }
 
 div.true button{

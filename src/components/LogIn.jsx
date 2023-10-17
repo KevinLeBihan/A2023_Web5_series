@@ -49,9 +49,7 @@ const LogIn = ({ onLoginFn,updateUser}) => {
                     placeholder="Password"
                 />
             </div>
-            <button data-cy="login" disabled={!isValid()} onClick={handleSubmit} className="Verifier">
-                Se connecter
-            </button>
+            <button data-cy="login" disabled={!isValid()} onClick={handleSubmit} className="Verifier">Se connecter</button>
         </>
     );
 }

@@ -31,10 +31,10 @@
   
 }
 
-.Tendance img.poster:hover{
+/* .Tendance img.poster:hover{
     width: 113%;
     transition: .5s;
-}
+} */
 
 
 .detailsSerie{
@@ -53,11 +53,11 @@ div.backdrop_hidden{
 }
 
 .Series-fav h1.titre{
-    width: 378px;
-    margin-left: 10.5%;
-    margin-top: 5%;
+    width: 475px;
+    margin-left: 5%;
+    margin-top: 2%;
     border-bottom: 4px solid rgb(255, 222, 7);
-    font-size: 4em;
+    font-size: 5em;
 }
 .fav{
     display: flex;
@@ -74,7 +74,7 @@ div.backdrop_hidden{
 .fav img.poster{
     width: 100%;
     margin-bottom: 20%;
-    transition: 0.5s;
+    /* transition: 0.5s; */
 }
 div.RechercheSeries input.inputRecherche{
     width: 22em;
@@ -108,9 +108,24 @@ div.RechercheSeries input.inputRecherche{
     transition: 0.5s;
 }
 
-.Tendance img.poster:hover{
+/* .Tendance img.poster:hover{
     width: 110%;
     transition: .5s;
+} */
+.phrase-favoris{
+    margin-left: 5%;
 }
+
+
+
+li.active{
+    background-color: rgb(54, 54, 54);;
+}
+
+h1.verif{
+    margin-left: 37.5%;
+    margin-top: 6%;
+}
+
 
 

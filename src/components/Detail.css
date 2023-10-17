@@ -1,5 +1,6 @@
 div.Detail-Serie{
-    padding: 2%;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
 }
 div.Detail-Serie div.image-video{
     display: flex;
@@ -8,7 +9,7 @@ div.Detail-Serie div.image-video{
 }
 
 div.Detail-Serie img.img-poster{ 
-    width: 29.4%;
+    width: 23.2%;
 }
 
 div.Detail-Serie div.section{
@@ -53,12 +54,18 @@ section.info-serie p.votes{
 }
 section.info-serie div.commentaire{
    display: flex;
-   width:300px ;
+   width:320px ;
+}
+
+section.eval{
+    position: relative;
+    bottom: 32px;
 }
 section.eval p{
     margin-top: 1%;
     position: relative;
-    left: 8px;
+    left: 210px;
+    bottom: 32px;
 }
 
 .exit button {

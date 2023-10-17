@@ -8,6 +8,8 @@ import DetailsSeries from "./DetailsSeries";
 import Saison from "./Saison";
 import Profil from "./Profil";
 import Layout from './Layout';
+import imagesData from '../photos/images.json';
+import { set } from 'lodash';
 
 
 const App = () => {
@@ -16,8 +18,6 @@ const App = () => {
     const savedUser = getFromStorage('username');
     const [username, setUsername] = useState("");
     const savedFavorite = getFromStorage('favorites');
-
-    // const [user, setUser] = useState("");
     const [series, setSeries] = useState([]);
     const [estConnecte, setEstConnecte] = useState(false);
     const [indexSerie, setIndexSerie] = useState(null);
@@ -25,6 +25,10 @@ const App = () => {
     const [favorite, setFavorite] = useState([savedFavorite || []]);
     const [search, setSearch] = useState("");
     const [seriesRecherche, setSeriesRecherche] = useState([]);
+
+    const images = imagesData.map(image => image.file);
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+
 
     useEffect(() => {
         const fetchSeries = async () => {
@@ -38,6 +42,8 @@ const App = () => {
         setUsername(user);
         saveToStorage('username', user);
     }
+
+
     useEffect(() => {
         if (savedUser) {
             setUsername(savedUser)
@@ -47,6 +53,8 @@ const App = () => {
             console.log(estConnecte);
         }
     }, [savedUser]);
+
+
     useEffect(() => {
         if (savedFavorite) {
             setFavorite(savedFavorite);
@@ -55,6 +63,8 @@ const App = () => {
             setFavorite([]);
         }
     }, []);
+
+
     useEffect(() => {
         const filtre = series.filter((serie) =>
             serie.title.toLowerCase().includes(search.toLowerCase())
@@ -62,7 +72,7 @@ const App = () => {
         setSeriesRecherche(filtre);
     }, [series, search]);
 
-   
+
     const detail = detailVisible === false || detailVisible === null ? "Backdrop_hidden" : "Backdrop";
     const onClickHandler = (index) => {
         setDetailVisible(true);
@@ -73,16 +83,17 @@ const App = () => {
 
     const clickBackdrop = () => {
         setDetailVisible(false);
-
+        setIsFav(!isFav);
     };
 
     const clearFromStorage = () => {
         removeFromStorage('username');
         removeFromStorage('favorites');
+        removeFromStorage('image');
         setFavorite([]);
         setEstConnecte(false);
+        setSearch("");
     }
-
     // console.log(indexSerie);
 
     const clickFavorite = (index) => {
@@ -99,9 +110,6 @@ const App = () => {
             }
         });
     };
-
-
-    console.log(favorite);
     const mesLiens = ['series-tendances', 'series-fav', 'recherche']
 
     const routes = [
@@ -115,7 +123,12 @@ const App = () => {
                 },
                 {
                     path: 'login',
-                    element: estConnecte === false ? (<LogIn onLoginFn={LoginHandler} estConnecter={() => setEstConnecte(true)} />) : (<Navigate to="/series-tendances" />)
+                    element: estConnecte === false ? (
+                        <div>
+                            <LogIn onLoginFn={LoginHandler} estConnecter={() => setEstConnecte(true)} />
+                            <h1 className='verif'>Veuillez entrer un nom d'utilisateur <br/> et un mot de passe pour poursuivre...</h1>
+                        </div>
+                    ) : (<Navigate to="/series-tendances" />)
                 },
                 {
                     path: 'series-tendances',
@@ -170,25 +183,29 @@ const App = () => {
                         <div className="Series-fav">
                             <h1 className="titre">Séries favoris</h1>
                             <div className="fav" data-cy="favoris">
-                                {favorite.map((index) => {
-                                    const favoriteSeries = series[index];
-                                    if (favoriteSeries) {
-                                        return (
-                                            <ListeSeries
-                                                key={favoriteSeries.id}
-                                                title={favoriteSeries.title}
-                                                year={favoriteSeries.year}
-                                                id={favoriteSeries.id}
-                                                slug={favoriteSeries.slug}
-                                                imdb={favoriteSeries.imdb}
-                                                poster={favoriteSeries.poster}
-                                                onClickFn={() => onClickHandler(index)}
-                                                lienRendu={mesLiens[1]}
-                                            />
-                                        );
-                                    }
-                                    return null; // handle the case where favoriteSeries is undefined
-                                })}
+                                {favorite.length > 0 ? (
+                                    favorite.map((index) => {
+                                        const favoriteSeries = series[index];
+                                        if (favoriteSeries) {
+                                            return (
+                                                <ListeSeries
+                                                    key={favoriteSeries.id}
+                                                    title={favoriteSeries.title}
+                                                    year={favoriteSeries.year}
+                                                    id={favoriteSeries.id}
+                                                    slug={favoriteSeries.slug}
+                                                    imdb={favoriteSeries.imdb}
+                                                    poster={favoriteSeries.poster}
+                                                    onClickFn={() => onClickHandler(index)}
+                                                    lienRendu={mesLiens[1]}
+                                                />
+                                            );
+                                        }
+                                        return null; // handle the case where favoriteSeries is undefined
+                                    })
+                                ) : (
+                                    <h1 className='phrase-favoris'>Vous n'avez pas de favoris</h1>
+                                )}
                             </div>
                         </div>
                     ) : (<Navigate to="/login" replace />),
@@ -217,7 +234,7 @@ const App = () => {
                     element:
                         estConnecte ? (
                             <div className="RechercheSeries">
-                                <input className='inputRecherche' type="text" placeholder="Rechercher par titre" data-cy='recherche' value={search} onChange={(e) => setSearch(e.target.value)}/>
+                                <input className='inputRecherche' type="text" placeholder="Rechercher par titre" data-cy='recherche' value={search} onChange={(e) => setSearch(e.target.value)} />
                                 <h1 className="titre">Recherche</h1>
                                 <div className="Recherche" >
                                     {
@@ -263,11 +280,11 @@ const App = () => {
                 {
                     path: 'profil',
                     element:
-                        estConnecte ?   (
+                        estConnecte ? (
                             <div className="Profil">
-                                <Profil nom={username} nbFav={favorite.length} fav={favorite} photo="https://i.pravatar.cc/300" cEstDeco={clearFromStorage} />
+                                <Profil nom={username} nbFav={favorite.length} fav={favorite} photo={randomImage} cEstDeco={clearFromStorage} />
                             </div>
-                        ): (<Navigate to="/login" replace />)
+                        ) : (<Navigate to="/login" replace />)
                 },
                 {
                     path: '*',

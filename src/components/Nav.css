@@ -5,14 +5,16 @@ ul.nav {
     font-size: 1.5em;
     list-style: none;
     width:1900px ;
-    margin: 2% auto;
+    margin: 2% -4%;
 }
 
 ul.nav li {
     display: flex;
     /* width: 3em; */
     height: 100%;
-    width: 100%;
+    width: 400px;
+    margin-left: 9%;
     justify-content: center;
+    
     text-align: center;
 }

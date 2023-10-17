@@ -1,3 +1,8 @@
+div.saison-detail{
+    position: relative;
+    bottom: 50px;
+    font-size: 0.7em;
+}
 
 div.saison p.true{
     display: block;
@@ -37,7 +42,7 @@ div.bouton-saison{
     display: flex;
     margin-left: 5%;
     align-items: center;
-    gap: 2%;
+    gap: 1%;
     width: 100%;
 }
 
@@ -46,8 +51,10 @@ div.saison{
     /* justify-content: center;
     align-items: center; */
     flex-direction: column;
-    gap: 2%;
+    gap: 1%;
     width: 100%;
+    position: relative;
+    bottom: 50px;
 }
 div.bouton-saison{
     display: flex;
@@ -64,7 +71,9 @@ div.saison p.true{
     width: 10em;
     display: block;
     opacity: 1;
-    margin: 0 0 3% -20% ;
+    margin: 0 0 0% -20% ;
+    position: relative;
+    bottom: 10px;
 }
 div.saison p.false{
     display: none;

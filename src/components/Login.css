@@ -14,7 +14,7 @@ div.InputUser{
 }
 
 button.Verifier{
-    margin-left: 39.5%;
+    margin-left: 37%;
     background-color: rgba(255, 255, 255, 0);
     color: white;
     font-size: 5em;
@@ -22,4 +22,9 @@ button.Verifier{
 
 button.Verifier:hover{
     color: rgb(255, 222, 7);
+}
+
+input:focus{
+    background-color: rgb(0, 0, 0);
+    color: white;
 }

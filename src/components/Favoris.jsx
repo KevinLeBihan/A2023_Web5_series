@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import './Favoris.css'
 
-const Favoris = ({isFav, onClickFn}) => {
-    const [favoris, setFavoris] = useState(false)
-    // console.log(!setFavoris);
-    // let isFavorite = isFav ? 'true' : 'false'
-    let isFavorite = favoris ? 'true' : 'false'
-    // console.log(isFavorite);
+const Favoris = ({isFav, onClickFn }) => {
+    const  isFavorite = isFav ? 'false' : 'true'
+    console.log(onClickFn);
     return (
         <div className={isFavorite}>
             {/* <button onClick={() => setFavoris(!favoris)}> */}

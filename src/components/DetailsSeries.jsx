@@ -6,10 +6,14 @@ import ReactPlayer from 'react-player'
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 
-const DetailsSeries = ({ onClickFn, onClickFav, favorite, lienRendu }) => {
+const DetailsSeries = ({ onClickFn, onClickFav, favorite, lienRendu}) => {
 
     const { serieId } = useParams();
     const [detail, setDetail] = useState([]);
+
+    const clickFavorite = (index) => {
+        onClickFav();
+    };
 
     useEffect(() => {
         const fetchSeries = async () => {
@@ -39,7 +43,7 @@ const DetailsSeries = ({ onClickFn, onClickFav, favorite, lienRendu }) => {
             </div>
             <div className="image-video">
                 <img src={detail.poster} alt="img-poster" className="img-poster" />
-                <ReactPlayer url={detail.trailer} width={700} height={450} volume={0.5} />
+                <ReactPlayer url={detail.trailer} width={700} height={350} volume={0.5} />
             </div>
             <div className="section">
                 <section className="info-serie">
@@ -64,17 +68,15 @@ const DetailsSeries = ({ onClickFn, onClickFav, favorite, lienRendu }) => {
                         <p className="language">Language parlée dans la série : {detail.language}</p>
                         <p className="aired">Nombre d'épisodes diffusés : {detail.aired_episodes}</p>
                         <a href={detail.imdb} className="imdb">Lien vers imdb</a>
-                        <a href={detail.trailer} className="trailer">Lien de la bande-annonce</a>
+                        <br/><a href={detail.trailer} className="trailer">Lien de la bande-annonce</a>
                     </div>
                 </section>
                 <section className="eval"><Rating /> <p>Évaluez cette série</p></section>
             </div>
             <div className="saison-detail">
-                <div>
-                    {detail.seasons && detail.seasons.map((s, i) => (
-                        <Saison key={i} saison={s.number} episode={s.episodes} />
-                    ))}
-                </div>
+                {detail.seasons && detail.seasons.map((s, i) => (
+                    <Saison key={i} saison={s.number} episode={s.episodes} />
+                ))}
             </div>
         </div>
     );

@@ -83,7 +83,6 @@ const App = () => {
 
     const clickBackdrop = () => {
         setDetailVisible(false);
-        setIsFav(!isFav);
     };
 
     const clearFromStorage = () => {
@@ -123,10 +122,10 @@ const App = () => {
                 },
                 {
                     path: 'login',
-                    element: estConnecte === false ? (
+                    element: series && estConnecte === false ? (
                         <div>
                             <LogIn onLoginFn={LoginHandler} estConnecter={() => setEstConnecte(true)} />
-                            <h1 className='verif'>Veuillez entrer un nom d'utilisateur <br/> et un mot de passe pour poursuivre...</h1>
+                            <h1 className='verif'>Veuillez entrer un nom d'utilisateur <br /> et un mot de passe pour poursuivre...</h1>
                         </div>
                     ) : (<Navigate to="/series-tendances" />)
                 },
@@ -139,7 +138,7 @@ const App = () => {
                                 <h1 className="titre">Séries Tendances</h1>
                                 <div className="Tendance">
                                     {
-                                        series.map(({ title, year, id, slug, imdb, poster }, index) => {
+                                        series.length > 0 && series.map(({ title, year, id, slug, imdb, poster }, index) => {
                                             return (
                                                 <ListeSeries
                                                     key={id}
@@ -183,7 +182,7 @@ const App = () => {
                         <div className="Series-fav">
                             <h1 className="titre">Séries favoris</h1>
                             <div className="fav" data-cy="favoris">
-                                {favorite.length > 0 ? (
+                                {series.length > 0 && favorite.length > 0 ? (
                                     favorite.map((index) => {
                                         const favoriteSeries = series[index];
                                         if (favoriteSeries) {
@@ -232,13 +231,13 @@ const App = () => {
                 {
                     path: 'recherche',
                     element:
-                        estConnecte ? (
+                        series.length > 0 && estConnecte ? (
                             <div className="RechercheSeries">
                                 <input className='inputRecherche' type="text" placeholder="Rechercher par titre" data-cy='recherche' value={search} onChange={(e) => setSearch(e.target.value)} />
                                 <h1 className="titre">Recherche</h1>
                                 <div className="Recherche" >
                                     {
-                                        seriesRecherche.map(({ title, year, id, slug, imdb, poster }, index) => {
+                                        series && seriesRecherche.map(({ title, year, id, slug, imdb, poster }, index) => {
                                             return (
                                                 <ListeSeries
                                                     key={id}
@@ -280,7 +279,7 @@ const App = () => {
                 {
                     path: 'profil',
                     element:
-                        estConnecte ? (
+                    series.length > 0 && estConnecte ? (
                             <div className="Profil">
                                 <Profil nom={username} nbFav={favorite.length} fav={favorite} photo={randomImage} cEstDeco={clearFromStorage} />
                             </div>

@@ -1,18 +1,15 @@
-// ///<reference types="cypress"/>
 
-// it('aller sur contact quand le bouton contact est cliquer',()=>{
-//     cy.visit('/');
-//     // cy.contains('Contact').click();
-//     cy.get('[data-cy="lnk-/contact"] li').click();
+// beforeEach(() => {
+//     cy.intercept(Cypress.env('apiUrl'),{fixture:'series.json'})
 // })
 it('ne devrait pas aller sur la page profil quand on est pas connecter', () => {
-    cy.visit('/Profil');
+    cy.visit('/profil');
 })
 it('ne devrait pas aller sur la page SeriesTendances quand on est pas connecter', () => {
-    cy.visit('/SeriesTendances');
+    cy.visit('/series-tendances');
 })
 it('ne devrait pas aller sur la page Series-fav quand on est pas connecter', () => {
-    cy.visit('/Series-fav');
+    cy.visit('/series-fav');
 })
 it('ne devrait pas aller sur la page recherche quand on est pas connecter', () => {
     cy.visit('/recherche');
